@@ -13,6 +13,8 @@ class CoffeeTracker < Sinatra::Base
     unless $redis.sismember 'api_keys', api_key
       halt 403, {'Content-Type' => 'text/plain'}, 'Invalid API Key'
     end
-  end
 
+    $redis.hincrby 'coffee', Time.now.strftime("%Y%m%d"), 1
+    200
+  end
 end
