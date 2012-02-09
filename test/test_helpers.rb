@@ -1,10 +1,9 @@
 ENV['RACK_ENV'] ||= 'test'
 
-require 'simplecov'
 require 'test/unit'
 require 'rack/test'
 
-require_relative '../courier'
+require_relative '../coffee_tracker'
 
 module TestHelpers
   include Rack::Test::Methods
