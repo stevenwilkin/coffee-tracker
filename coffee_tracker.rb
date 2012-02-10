@@ -19,7 +19,7 @@ class CoffeeTracker < Sinatra::Base
       halt 403, {'Content-Type' => 'text/plain'}, 'Invalid API Key'
     end
 
-    $redis.hincrby 'coffee', Time.now.strftime("%Y%m%d"), 1
-    200
+    count = $redis.hincrby 'coffee', Time.now.strftime("%Y%m%d"), 1
+    [200, {'Content-Type' => 'text/plain'}, count.to_s]
   end
 end

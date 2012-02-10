@@ -2,7 +2,7 @@ require_relative '../test_helpers'
 
 require 'timecop'
 
-class IntegrationGetCountTest < Test::Unit::TestCase
+class ApiGetAndUpdateCountTest < Test::Unit::TestCase
   include TestHelpers
   
   def setup
@@ -27,6 +27,11 @@ class IntegrationGetCountTest < Test::Unit::TestCase
   def test_count_starts_at_zero
     get '/api'
     assert_equal '0', last_response.body, 'Should return zero'
+  end
+
+  def test_post_returns_updated_count
+    post '/api'
+    assert_equal '1', last_response.body, 'Should get updated count on POST'
   end
 
   def test_count_increases_after_post
