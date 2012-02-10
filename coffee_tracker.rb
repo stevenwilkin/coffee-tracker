@@ -5,6 +5,11 @@ require_relative 'conf/redis'
 
 class CoffeeTracker < Sinatra::Base
 
+  get '/api' do
+    count = $redis.hget('coffee', Time.now.strftime("%Y%m%d")) || 0
+    [200, {'Content-Type' => 'text/plain'}, count.to_s]
+  end
+
   post '/api' do
     api_key = env['HTTP_X_API_KEY']
     unless api_key
