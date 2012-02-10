@@ -8,6 +8,7 @@ class ApiGetAndUpdateCountTest < Test::Unit::TestCase
   def setup
     @valid_api_key = 'valid'
     @now = Time.new(2012, 2, 9, 13, 20)
+    @tomorrow = Time.new(2012, 2, 10, 13, 20)
 
     $redis.flushdb
     $redis.sadd 'api_keys', @valid_api_key
@@ -38,5 +39,12 @@ class ApiGetAndUpdateCountTest < Test::Unit::TestCase
     post '/api'
     get '/api'
     assert_equal '1', last_response.body, 'Should increase count after POST'
+  end
+
+  def test_count_is_back_to_zero_on_next_day
+    post '/api'
+    Timecop.freeze(@tomorrow)
+    get '/api'
+    assert_equal '0', last_response.body, 'Should return zero'
   end
 end
