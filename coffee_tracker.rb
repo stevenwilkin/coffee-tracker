@@ -5,6 +5,11 @@ require_relative 'conf/redis'
 
 class CoffeeTracker < Sinatra::Base
 
+  get '/' do
+    count = $redis.hget('coffee', Time.now.strftime("%Y%m%d")) || 0
+    File.read('./views/index.html') % count
+  end
+
   get '/api' do
     count = $redis.hget('coffee', Time.now.strftime("%Y%m%d")) || 0
     [200, {'Content-Type' => 'text/plain'}, count.to_s]
