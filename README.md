@@ -46,6 +46,11 @@ Assuming Redis is installed and running locally:
 
 Web interface is then available at [http://0.0.0.0:9292](http://0.0.0.0:9292).
 
+## Tests
+
+The test suite uses Minitest which is now part of the Ruby 1.9.x standard library and can be kicked off with Rake:
+
+	$ bundle exec rake
 
 ## API
 
