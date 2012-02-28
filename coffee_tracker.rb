@@ -7,7 +7,7 @@ class CoffeeTracker < Sinatra::Base
 
   get '/' do
     count = $redis.hget('coffee', Time.now.strftime("%Y%m%d")) || 0
-    File.read('./views/index.html') % count
+    File.read('./views/index.html').gsub(/%COUNT%/, count.to_s)
   end
 
   get '/api' do
